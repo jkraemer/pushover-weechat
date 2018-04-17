@@ -138,6 +138,7 @@ def notify(data, signal, signal_data)
 
   if (Time.now - @last) > Weechat.config_get_plugin('interval').to_i
     message = signal_data[/^\S+\t(.*)/, 1]
+    message.force_encoding 'UTF-8' if message.encoding.to_s == 'ASCII-8BIT'
     if ignore_re = Weechat.config_get_plugin('ignore_re')
       return Weechat::WEECHAT_RC_OK if message =~ Regexp.new(ignore_re, true)
     end
